@@ -8,33 +8,53 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.List;
+
 public class BMIAdapter extends RecyclerView.Adapter<BMIAdapter.ViewHolder> {
     @NonNull
-    @Override
+
+    private List<item_list> bmilist;
+
+    public BMIAdapter(@NonNull List<item_list> bmilist) {
+        this.bmilist = bmilist;
+    }
+
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(mContext)
+        View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.item_list, parent, false);
         ViewHolder holder = new ViewHolder(view);
-        holder.tv_height = view.findViewById(R.id.tv_height);
-        holder.tv_weight = view.findViewById(R.id.tv_weight);
         return holder;
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+        item_list item_list = bmilist.get(position);
+        holder.height.setText(item_list.height);
+        holder.weight.setText(item_list.weight);
+        holder.bmi.setText(item_list.bmi);
 
     }
 
     @Override
     public int getItemCount() {
-        return 0;
+        if(bmilist != null) {
+            return bmilist.size();
+        } else {
+            return 0;
+        }
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
-        public TextView tv_height;
-        public TextView tv_weight;
+
+        private final TextView height;
+        private final TextView weight;
+        private final TextView bmi;
+
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
+            height = (TextView) itemView.findViewById(R.id.tv_height);
+            weight = (TextView) itemView.findViewById(R.id.tv_weight);
+            bmi = (TextView) itemView.findViewById(R.id.tv_bmi);
         }
     }
 }
